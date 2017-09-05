@@ -33,7 +33,6 @@ class TextBar : public Widget {
     virtual int getHeight();
 
   protected:
-    Timer timer;
     SDL_Text *text;
     int width;
     int height;

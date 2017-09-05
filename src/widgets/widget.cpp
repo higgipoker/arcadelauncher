@@ -6,6 +6,7 @@ Widget::Widget() {
     size_w = size_h = 0;
     z_index = 0;
     visible = true;
+    alpha = 255;
     fade_direction = 0;
 }
 Widget::~Widget() {}

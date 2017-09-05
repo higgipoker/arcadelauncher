@@ -10,6 +10,8 @@
 // --------------------------------------------------
 MainMenu::MainMenu() {
     background = NULL;
+    background2 = NULL;
+    wnd = NULL;
     selection_theme = NULL;
     snd_choose = NULL;
     snd_mouhaha = NULL;
