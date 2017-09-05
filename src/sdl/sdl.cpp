@@ -51,8 +51,7 @@ void SDL::initGraphics() {
 
     // screen dimensions
     unsigned int WINDOW_WIDTH = StringTools::toInt(Config::data.screen_width);
-    unsigned int WINDOW_HEIGHT =
-        StringTools::toInt(Config::data.screen_height);
+    unsigned int WINDOW_HEIGHT =StringTools::toInt(Config::data.screen_height);
     unsigned int WINDOW_X = StringTools::toInt(Config::data.screen_offset_x);
     unsigned int WINDOW_Y = StringTools::toInt(Config::data.screen_offset_y);
 

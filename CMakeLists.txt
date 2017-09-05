@@ -2,7 +2,7 @@
 cmake_minimum_required (VERSION 2.6)
 
 #project name
-project (higgilauncher)
+project (arcadelauncher)
 
 #set environment variables
 set(CMAKE_BINARY_DIR ${CMAKE_SOURCE_DIR}/bin)
@@ -21,7 +21,7 @@ include_directories("${PROJECT_SOURCE_DIR}/src")
 include_directories("/usr/local/include/SDL2")
 
 #add files
-add_executable(higgilauncher
+add_executable(arcadelauncher
 src/gui/selectiontheme.cpp
 src/gui/coverflow.cpp
 src/gui/staticgrid.cpp
@@ -63,18 +63,18 @@ src/input/emulator.cpp
 )
 
 # link libs
-target_link_libraries (higgilauncher "SDL2main")
-target_link_libraries (higgilauncher "SDL2")
-target_link_libraries (higgilauncher "SDL2_image")
-target_link_libraries (higgilauncher "SDL2_ttf")
-target_link_libraries (higgilauncher "SDL2_mixer")
-#target_link_libraries (higgilauncher "sdl2_gfx")
-target_link_libraries (higgilauncher "avformat")
-target_link_libraries (higgilauncher "avcodec")
-target_link_libraries (higgilauncher "avutil")
-target_link_libraries (higgilauncher "swresample")
-target_link_libraries (higgilauncher "swscale")
-target_link_libraries (higgilauncher "pthread")
-target_link_libraries (higgilauncher "dl")
-target_link_libraries (higgilauncher "z")
-#target_link_libraries (higgilauncher "gamelib")
+target_link_libraries (arcadelauncher "SDL2main")
+target_link_libraries (arcadelauncher "SDL2")
+target_link_libraries (arcadelauncher "SDL2_image")
+target_link_libraries (arcadelauncher "SDL2_ttf")
+target_link_libraries (arcadelauncher "SDL2_mixer")
+#target_link_libraries (arcadelauncher "sdl2_gfx")
+target_link_libraries (arcadelauncher "avformat")
+target_link_libraries (arcadelauncher "avcodec")
+target_link_libraries (arcadelauncher "avutil")
+target_link_libraries (arcadelauncher "swresample")
+target_link_libraries (arcadelauncher "swscale")
+target_link_libraries (arcadelauncher "pthread")
+target_link_libraries (arcadelauncher "dl")
+target_link_libraries (arcadelauncher "z")
+#target_link_libraries (arcadelauncher "gamelib")

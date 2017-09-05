@@ -173,6 +173,10 @@ void mainLoop() {
 // main
 // --------------------------------------------------
 extern "C" int main(/*int argc, char *argv[]*/) {
+
+    // open the config file
+    Config::data.Open("data/launcher.cfg");
+
     // init SDL stuff
     SDL::initGraphics();
     SDL::initSound();
@@ -180,9 +184,6 @@ extern "C" int main(/*int argc, char *argv[]*/) {
 
     // init ffmpeg
     av_register_all();
-
-    // open the config file
-    Config::data.Open("data/launcher.cfg");
 
     // init the resources
     Resources::Init();
