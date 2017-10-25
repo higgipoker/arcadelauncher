@@ -1,7 +1,7 @@
 #pragma once
-#include "resources/resources.h"
-#include "sdl/window.h"
-#include "widgets/widget.h"
+#include "../resources/resources.h"
+#include "../sdl/window.h"
+#include "../widgets/widget.h"
 #include <SDL_mixer.h>
 #include <vector>
 

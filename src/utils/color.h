@@ -8,8 +8,6 @@
 
 #pragma once
 
-#include <iostream>
-
 class Color {
   public:
     Color() { r = g = b = a = 0; }

@@ -1,5 +1,5 @@
 #include "selectiontheme.h"
-#include "sdl/sdl.h"
+#include "../sdl/sdl.h"
 
 // --------------------------------------------------
 // constructor
@@ -47,7 +47,7 @@ SelectionTheme::SelectionTheme(SDLWindow *wnd) {
 // --------------------------------------------------
 // getSelectedGame
 // --------------------------------------------------
-GAME *SelectionTheme::getSelectedGame(void) {
+GAME *SelectionTheme::getSelectedGame(void) {    
     return games[getSelectionIndex()];
 }
 

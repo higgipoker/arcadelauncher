@@ -40,38 +40,37 @@ TextBar *ip_bar;
 // handleInput
 // --------------------------------------------------
 void handleInput() {
-    /* normal sdl event */
+    // normal sdl event
     SDL_Event event;
 
-    /* event to be handled by main menu */
+    // event to be handled by main menu
     Event menu_event;
 
-    /* avoid double launches */
-    if(main_menu.returningFromGame()) {
-        /* reset all input states */
+    // avoid double launches
+    if (main_menu.returningFromGame()) {
+        // reset all input states
         SDL::getInputDevice()->reset();
 
-        /* resume main menu handling */
+        // resume main menu handling
         main_menu.resume();
 
-        /* killall sdl events */
+        // killall sdl events
         SDL_PumpEvents();
         SDL_FlushEvents(SDL_FIRSTEVENT, SDL_LASTEVENT);
 
-
     } else {
-        /* sdl event polling */
+        // sdl event polling
         SDL_PollEvent(&event);
 
-        /* convert to input event */
+        // convert to input event
         menu_event = SDL::getInputDevice()->getInputEvent(event);
 
-        /* handle the input */
+        // handle the input
         main_menu.handleInput(menu_event);
 
-        if(event.type == SDL_KEYDOWN) {
+        if (event.type == SDL_KEYDOWN) {
 
-            switch(event.key.keysym.sym) {
+            switch (event.key.keysym.sym) {
 
             case SDLK_TAB:
                 ip_bar->show();
@@ -79,19 +78,15 @@ void handleInput() {
 
             default:
                 break;
-
             }
-
         }
     }
 
 #ifndef NDEBUG
-
-    /* special quit event */
-    if(menu_event.evt == QUIT) {
+    // special quit event
+    if (menu_event.evt == QUIT) {
         quit = true;
     }
-
 #endif
 }
 
@@ -99,8 +94,8 @@ void handleInput() {
 // addGames
 // --------------------------------------------------
 void addGames() {
-    /* just add all games for now */
-    for(unsigned int i = 0; i < Resources::game_list.size(); i++) {
+    // just add all games for now
+    for (unsigned int i = 0; i < Resources::game_list.size(); i++) {
         main_menu.addGame(Resources::game_list[i]);
     }
 }
@@ -109,15 +104,14 @@ void addGames() {
 // checkSingleGameMode
 // --------------------------------------------------
 bool checkSingleGameMode(void) {
-    if(!Config::data.single_game.empty()) {
+    if (!Config::data.single_game.empty()) {
         single_game = Resources::GetGame(Config::data.single_game);
 
-        if(single_game->gamename != "unknown") {
+        if (single_game->gamename != "unknown") {
             return true;
 
         } else {
-            std::cout << "WARNING: single mode set but game was not found"
-                      << std::endl;
+            std::cout << "WARNING: single mode set but game was not found" << std::endl;
         }
     }
 
@@ -130,17 +124,9 @@ bool checkSingleGameMode(void) {
 void doSingleGame(void) {
     int s = system(single_game->exec_command.c_str());
 
-    if(s != 0) {
+    if (s != 0) {
         std::cout << "SYSTEM CALL FAILED WITH CODE " << s << std::endl;
     }
-}
-// --------------------------------------------------
-// shutDown
-// --------------------------------------------------
-void shutDown() {
-    Resources::Destroy();
-    main_menu.stop();
-    SDL::close();
 }
 
 // --------------------------------------------------
@@ -172,7 +158,8 @@ void mainLoop() {
 // --------------------------------------------------
 // main
 // --------------------------------------------------
-extern "C" int main(/*int argc, char *argv[]*/) {
+int main(int argc, char *argv[]) {
+    // extern "C" int main(/*int argc, char *argv[]*/) {
 
     // open the config file
     Config::data.Open("data/launcher.cfg");
@@ -189,7 +176,7 @@ extern "C" int main(/*int argc, char *argv[]*/) {
     Resources::Init();
 
     // check for single game mode
-    if(checkSingleGameMode()) {
+    if (checkSingleGameMode()) {
         doSingleGame();
     }
 
@@ -201,22 +188,23 @@ extern "C" int main(/*int argc, char *argv[]*/) {
     // add games to menu
     addGames();
 
-    /* start main menu */
+    // start main menu
     main_menu.start();
 
     std::string ip = IPAddress::Get();
     std::cout << ip << std::endl;
 
-    ip_bar = new TextBar(SDL::window(), ip,
-                         StringTools::toInt(Config::data.screen_width), 42);
+    ip_bar = new TextBar(SDL::window(), ip, StringTools::toInt(Config::data.screen_width), 42);
 
-    /* main program loop */
-    while(!quit) {
+    // main program loop
+    while (!quit) {
         mainLoop();
     }
 
-    /* clean up */
+    // clean up
     Config::data.Close();
     delete ip_bar;
-    shutDown();
+    Resources::Destroy();
+    main_menu.stop();
+    SDL::close();
 }

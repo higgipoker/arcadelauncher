@@ -1,6 +1,6 @@
 #pragma once
 
-#include "sdl/image.h"
+#include "../sdl/image.h"
 #include "widget.h"
 
 class ScreenEffect : public Widget {

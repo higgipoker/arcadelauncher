@@ -1,6 +1,6 @@
 #pragma once
 
-#include "sdl/renderable.h"
+#include "renderable.h"
 
 class Image : public Renderable {
   public:

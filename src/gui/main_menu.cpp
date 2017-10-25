@@ -1,9 +1,9 @@
 #include "main_menu.h"
-#include "config/config.h"
-#include "input/input.h"
-#include "resources/resources.h"
-#include "sdl/sdl.h"
-#include "utils/stringtools.h"
+#include "../config/config.h"
+#include "../input/input.h"
+#include "../resources/resources.h"
+#include "../sdl/sdl.h"
+#include "../utils/stringtools.h"
 
 // --------------------------------------------------
 // Constructor
@@ -23,8 +23,11 @@ MainMenu::MainMenu() {
 // Destructor
 // --------------------------------------------------
 MainMenu::~MainMenu() {
-    delete background;
     delete selection_theme;
+
+    for (auto it = backgrounds.begin(); it != backgrounds.end(); ++it) {
+        delete (*it).second;
+    }
 }
 
 // --------------------------------------------------
@@ -34,17 +37,15 @@ void MainMenu::init(SDLWindow *window) {
     wnd = window;
 
     // only initialize once
-    if(!inited) {
+    if (!inited) {
 
         std::cout << Config::data.theme << std::endl;
 
-        if(Config::data.theme == "coverflow") {
-
+        if (Config::data.theme == "coverflow") {
             selection_theme = new Coverflow(window);
             selection_theme->init();
 
-        } else if(Config::data.theme == "grid") {
-
+        } else if (Config::data.theme == "grid") {
             selection_theme = new StaticGrid(window);
             selection_theme->init();
         }
@@ -57,25 +58,25 @@ void MainMenu::init(SDLWindow *window) {
 void MainMenu::start() {
     running = true;
 
-    if(SDL::SOUND_INITED)
+    if (SDL::SOUND_INITED)
         snd_mouhaha = Mix_LoadWAV("sounds/mouhaha.wav");
 
-    if(snd_mouhaha == NULL) {
+    if (snd_mouhaha == NULL) {
         std::cout << "Failed to load sound effect: [sounds/mouhaha.wav], "
-                  "SDL_mixer Error:"
+                     "SDL_mixer Error:"
                   << Mix_GetError() << std::endl;
     }
 
-    if(SDL::SOUND_INITED)
+    if (SDL::SOUND_INITED)
         snd_choose = Mix_LoadWAV("sounds/choose.wav");
 
-    if(snd_choose == NULL) {
+    if (snd_choose == NULL) {
         std::cout << "Failed to load sound effect: [sounds/choose.wav], "
-                  "SDL_mixer Error:"
+                     "SDL_mixer Error:"
                   << Mix_GetError() << std::endl;
     }
 
-    if(SDL::SOUND_INITED)
+    if (SDL::SOUND_INITED)
         Mix_PlayChannel(-1, snd_choose, 0);
 }
 
@@ -92,6 +93,7 @@ void MainMenu::addGame(GAME *new_game) {
     // set the bg
     setBackground(new_game->type);
 
+    // set the actual bg to the bg of the latest added game
     background = background2 = getBackground(new_game->type);
 }
 
@@ -99,25 +101,17 @@ void MainMenu::addGame(GAME *new_game) {
 // update
 // --------------------------------------------------
 void MainMenu::update() {
-    if(running) {
-        Background *tmp =
-            getBackground(selection_theme->getSelectedGame()->type);
+    if (running) {        
 
-        if(tmp != background) {
-
-            tmp->fadeIn();
+        if (getBackground(selection_theme->getSelectedGame()->type) != background) {
+            getBackground(selection_theme->getSelectedGame()->type)->fadeIn();
             background->fadeOut();
 
             // swap
+            Background *tmp = getBackground(selection_theme->getSelectedGame()->type);
             background2 = background;
             background = tmp;
         }
-
-        background2->update();
-        background->update();
-        selection_theme->update();
-
-
         background2->update();
         background->update();
         selection_theme->update();
@@ -128,10 +122,8 @@ void MainMenu::update() {
 // render
 // --------------------------------------------------
 void MainMenu::render() {
-    if(running) {
-
-        if(background) {
-
+    if (running) {
+        if (background && background2) {
             background2->render();
             background->render();
         }
@@ -144,9 +136,9 @@ void MainMenu::render() {
 // handleInput
 // --------------------------------------------------
 void MainMenu::handleInput(Event event) {
-    if(running) {
+    if (running) {
 
-        switch(event.evt) {
+        switch (event.evt) {
 
         case UP:
             selection_theme->onUp();
@@ -187,7 +179,7 @@ void MainMenu::handleInput(Event event) {
 // stop
 // --------------------------------------------------
 void MainMenu::stop() {
-    if(SDL::SOUND_INITED) {
+    if (SDL::SOUND_INITED) {
         Mix_FreeChunk(snd_choose);
         Mix_FreeChunk(snd_mouhaha);
     }
@@ -196,15 +188,16 @@ void MainMenu::stop() {
 // --------------------------------------------------
 // launchGame
 // --------------------------------------------------
-void MainMenu::launchGame(const std::string &rom_name) {}
+void MainMenu::launchGame(const std::string &rom_name) {
+}
 
 // --------------------------------------------------
 // setBackground
 // --------------------------------------------------
 void MainMenu::setBackground(PLATFORM _platform) {
 
-    for(auto it = backgrounds.begin(); it != backgrounds.end(); ++it) {
-        if((*it).first == _platform) {
+    for (auto it = backgrounds.begin(); it != backgrounds.end(); ++it) {
+        if ((*it).first == _platform) {
             return;
         }
     }
@@ -217,8 +210,8 @@ void MainMenu::setBackground(PLATFORM _platform) {
 // getBackground
 // --------------------------------------------------
 Background *MainMenu::getBackground(PLATFORM _platform) {
-    for(auto it = backgrounds.begin(); it != backgrounds.end(); ++it) {
-        if((*it).first == _platform) {
+    for (auto it = backgrounds.begin(); it != backgrounds.end(); ++it) {
+        if ((*it).first == _platform) {
             return (*it).second;
         }
     }

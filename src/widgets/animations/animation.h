@@ -1,7 +1,7 @@
 #pragma once
 
-#include "utils/timer.h"
-#include "widgets/widget.h"
+#include "../../utils/timer.h"
+#include "../widget.h"
 
 /* Abstract base class for widget animations */
 class Animation {

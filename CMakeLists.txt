@@ -9,16 +9,14 @@ set(CMAKE_BINARY_DIR ${CMAKE_SOURCE_DIR}/bin)
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR})
 set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR})
 
-set(CMAKE_C_FLAGS_DEBUG "-DMY_DEBUG")
-
 # --------------------------------------------------
 # compiler flags
 # --------------------------------------------------
-add_definitions(-std=c++11)
+add_definitions(-std=c++14)
 
 # set include dirs
 include_directories("${PROJECT_SOURCE_DIR}/src")
-include_directories("/usr/local/include/SDL2")
+include_directories("/usr/include/SDL2")
 
 #add files
 add_executable(arcadelauncher
@@ -68,7 +66,6 @@ target_link_libraries (arcadelauncher "SDL2")
 target_link_libraries (arcadelauncher "SDL2_image")
 target_link_libraries (arcadelauncher "SDL2_ttf")
 target_link_libraries (arcadelauncher "SDL2_mixer")
-#target_link_libraries (arcadelauncher "sdl2_gfx")
 target_link_libraries (arcadelauncher "avformat")
 target_link_libraries (arcadelauncher "avcodec")
 target_link_libraries (arcadelauncher "avutil")
@@ -77,4 +74,3 @@ target_link_libraries (arcadelauncher "swscale")
 target_link_libraries (arcadelauncher "pthread")
 target_link_libraries (arcadelauncher "dl")
 target_link_libraries (arcadelauncher "z")
-#target_link_libraries (arcadelauncher "gamelib")

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "files/configfile.h"
+#include "../files/configfile.h"
 
 class Config {
 public:

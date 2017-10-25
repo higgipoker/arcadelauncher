@@ -10,7 +10,7 @@
 #define __sensi2__Keyboard__
 
 #include "input.h"
-#include "utils/timer.h"
+#include "../utils/timer.h"
 #include <iostream>
 
 //  -------------------------------------------------------

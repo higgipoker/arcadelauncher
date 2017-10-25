@@ -2,12 +2,12 @@
 
 #include "coverflow.h"
 #include "SDL.h"
-#include "config/config.h"
-#include "resources/resources.h"
-#include "sdl/sdl.h"
-#include "utils/stringtools.h"
-#include "widgets/animations/blink.h"
-#include "widgets/icon.h"
+#include "../config/config.h"
+#include "../resources/resources.h"
+#include "../sdl/sdl.h"
+#include "../utils/stringtools.h"
+#include "../widgets/animations/blink.h"
+#include "../widgets/icon.h"
 
 //#define ICONS_Y 128
 #define MARKER_HEIGHT 42

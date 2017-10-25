@@ -5,7 +5,7 @@
 //  Created by Paul Higgins on 28/06/2013.
 //  Copyright (c) 2013 Paul Higgins. All rights reserved.
 //
-#include "SDL.h"
+#include <SDL.h>
 
 #ifdef __APPLE__
 #include <OpenGL/gl.h>

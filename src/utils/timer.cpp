@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Paul Higgins. All rights reserved.
 //
 #include "timer.h"
-#include "SDL.h"
+#include <SDL.h>
 
 Timer::Timer() {
     startTicks = 0;

@@ -1,9 +1,9 @@
 #include "staticgrid.h"
-#include "config/config.h"
-#include "resources/resources.h"
-#include "sdl/sdl.h"
-#include "utils/stringtools.h"
-#include "widgets/animations/slide.h"
+#include "../config/config.h"
+#include "../resources/resources.h"
+#include "../sdl/sdl.h"
+#include "../utils/stringtools.h"
+#include "../widgets/animations/slide.h"
 #include <stdio.h>
 #include <sys/types.h>
 #include <sys/wait.h>

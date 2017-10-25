@@ -7,23 +7,20 @@
 //
 
 #include "window.h"
-#include "SDL.h"
+#include <SDL.h>
 
 //  -------------------------------------------------------
 //  init
 //  -------------------------------------------------------
-void SDLWindow::init(std::string title, int x_pos, int y_pos, int wnd_width,
-                     int wnd_height, unsigned int flags) {
-    win = SDL_CreateWindow(title.c_str(), x_pos, y_pos, wnd_width, wnd_height,
-                           (Uint32)flags);
+void SDLWindow::init(std::string title, int x_pos, int y_pos, int wnd_width, int wnd_height, unsigned int flags) {
+    win = SDL_CreateWindow(title.c_str(), x_pos, y_pos, wnd_width, wnd_height, (Uint32)flags);
 
     if (win == 0) {
 
         std::cout << "Could not create SDL window" << std::endl;
     }
 
-    renderer = SDL_CreateRenderer(win, -1, SDL_RENDERER_ACCELERATED |
-                                               SDL_RENDERER_PRESENTVSYNC);
+    renderer = SDL_CreateRenderer(win, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 
     if (renderer == 0) {
         std::cout << "Could not create SDL renderer" << std::endl;
@@ -51,7 +48,9 @@ void SDLWindow::clear(Color &c) {
 //  --------------------------------------------------
 //  present
 //  --------------------------------------------------
-void SDLWindow::present() { SDL_RenderPresent(renderer); }
+void SDLWindow::present() {
+    SDL_RenderPresent(renderer);
+}
 
 //  --------------------------------------------------
 //  close

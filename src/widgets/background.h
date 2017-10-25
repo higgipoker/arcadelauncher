@@ -1,7 +1,8 @@
 #pragma once
 
-#include "sdl/image.h"
-#include "utils/point.h"
+#include <memory>
+#include "../sdl/image.h"
+#include "../utils/point.h"
 #include "widget.h"
 
 /** @brief Background widget */
@@ -13,11 +14,6 @@ class Background : public Widget {
      * @param filename image file
      */
     Background(SDLWindow *window, const std::string &filename);
-
-    /**
-     * @brief Destructor
-     */
-    virtual ~Background();
 
     /**
      * @brief render
@@ -34,19 +30,19 @@ class Background : public Widget {
     /*
      * @brief get position
      */
-    virtual Point getPosition() { return img->getPosition(); };
+    virtual Point getPosition() { return img->getPosition(); }
 
     /**
      * @brief get width
      */
-    virtual int getWidth() { return img->getWidth(); };
+    virtual int getWidth() { return img->getWidth(); }
 
     /**
      * @brief get higght
      */
-    virtual int getHeight() { return img->getHeight(); };
+    virtual int getHeight() { return img->getHeight(); }
 
   protected:
     /// bg image
-    Image *img;
+    std::unique_ptr<Image> img;
 };

@@ -1,9 +1,9 @@
 #pragma once
 
 #include "icon.h"
-#include "sdl/window.h"
-#include "utils/timer.h"
-#include "video/videostreamer2.h"
+#include "../sdl/window.h"
+#include "../utils/timer.h"
+#include "../video/videostreamer2.h"
 #include "widget.h"
 
 class Video : public Widget {
@@ -79,7 +79,7 @@ class Video : public Widget {
     virtual void scale(int _w, int _h);
 
   protected:
-    VideoStreamer2 *stream;
+    std::unique_ptr<VideoStreamer2> stream;
 
     SDL_Rect videoRectSrc;
     SDL_Rect videoRectDst;
@@ -94,8 +94,8 @@ class Video : public Widget {
     /**
      * @brief helper to create sdl surface
      */
-    void createTexture();
-    Icon *border;
+    void createTexture();    
+    std::unique_ptr<Icon> border;
 
     int border_width;
 };

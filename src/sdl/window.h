@@ -11,9 +11,9 @@
 
 #include <iostream>
 
-#include "SDL.h"
+#include <SDL.h>
 
-#include "utils/color.h"
+#include "../utils/color.h"
 
 class SDLWindow {
 

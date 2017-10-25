@@ -10,16 +10,15 @@
 // --------------------------------------------------
 // Video
 // --------------------------------------------------
-Video::Video(SDLWindow *wnd, bool with_border) {
-    stream = NULL;
+Video::Video(SDLWindow *wnd, bool with_border) {    
     video_texture = NULL;
     window = wnd;
     stream_started = false;
 
-    stream = new VideoStreamer2();
+    stream = std::make_unique<VideoStreamer2>();
 
-    if (with_border) {
-        border = new Icon(wnd, "gfx/video_frame.png");
+    if (with_border) {        
+        border = std::make_unique<Icon>(wnd, "gfx/video_frame.png");
         border_width = 6;
     } else {
         border = NULL;
@@ -37,8 +36,7 @@ void Video::setStreamSource(const std::string &filename) {
     if (video_texture)
         clearScreen();
 
-    delete stream;
-    stream = new VideoStreamer2();
+    stream = std::make_unique<VideoStreamer2>();
     if (stream->start(filename))
         stream_started = true;
     frame_timer.start();
@@ -57,51 +55,43 @@ void Video::setStreamSource(const std::string &filename) {
 Video::~Video() {
     //         if(stream_started)
     //                 stream->stop();
-    //         delete stream;
-
-    delete stream;
+    //         delete stream;   
 
     if (video_texture) {
         SDL_DestroyTexture(video_texture);
         video_texture = NULL;
     }
-    delete border;
 }
 
 // --------------------------------------------------
 // render
 // --------------------------------------------------
 void Video::render() {
-    if (stream_started) {
+    if (!stream_started)
+        return;
+    if (!visible) {
+        return;
+    }
 
-        if (frame_timer.get_ticks() >= FRAME_TIMER) {
+    // ffmpeg stuff
+    if (frame_timer.get_ticks() >= 29) {
 
-            AVFrame *pFrame = stream->poll();
+        // get the next frame
+        AVFrame *pFrame = stream->poll();
 
-            if (pFrame) {
-
-                if (visible) {
-                    if (SDL_UpdateTexture(video_texture, &videoRectSrc,
-                                          pFrame->data[0],
-                                          pFrame->linesize[0]) != 0) {
-                        std::cout << SDL_GetError() << std::endl;
-                    }
-                }
-
-                frame_timer.start();
-                // av_freep(pFrame);
-            }
+        if (pFrame) {
+            // set the texture pixels with video frame
+            SDL_UpdateTexture(video_texture, &videoRectSrc, pFrame->data[0], pFrame->linesize[0]);
+            frame_timer.start();
         }
+    }
 
-        if (visible) {
+    // render to window
+    SDL_RenderCopy(window->renderer, video_texture, &videoRectSrc, &videoRectDst);
 
-            if (SDL_RenderCopy(window->renderer, video_texture, &videoRectSrc,
-                               &videoRectDst) != 0) {
-                // std::cout << SDL_GetError()   << std::endl;
-            }
-            if (border)
-                border->render();
-        }
+    // render video border
+    if (border) {
+        border->render();
     }
 }
 
@@ -119,22 +109,28 @@ void Video::setPosition(int _x, int _y) {
 // --------------------------------------------------
 // blend
 // --------------------------------------------------
-void Video::blend(int alpha) {}
+void Video::blend(int alpha) {
+}
 
 // --------------------------------------------------
 // move
 // --------------------------------------------------
-void Video::move(int _x, int _y) {}
+void Video::move(int _x, int _y) {
+}
 
 // --------------------------------------------------
 // getWidth
 // --------------------------------------------------
-int Video::getWidth() { return videoRectDst.w; }
+int Video::getWidth() {
+    return videoRectDst.w;
+}
 
 // --------------------------------------------------
 // getHeight
 // --------------------------------------------------
-int Video::getHeight() { return videoRectDst.h; }
+int Video::getHeight() {
+    return videoRectDst.h;
+}
 
 // --------------------------------------------------
 // stop
@@ -144,11 +140,6 @@ void Video::stop() {
     //                 stream->stop();
     //                 stream_started = false;
     //         }
-
-    if (stream) {
-        delete stream;
-        stream = NULL;
-    }
 
     if (video_texture)
         SDL_DestroyTexture(video_texture);
@@ -171,7 +162,9 @@ void Video::clearScreen() {
 // --------------------------------------------------
 // getPosition
 // --------------------------------------------------
-Point Video::getPosition() { return Point(videoRectDst.x, videoRectDst.y); }
+Point Video::getPosition() {
+    return Point(videoRectDst.x, videoRectDst.y);
+}
 
 // --------------------------------------------------
 // scale
@@ -202,11 +195,10 @@ void Video::createTexture() {
         video_texture = NULL;
     }
 
-    video_texture = SDL_CreateTexture(
-        window->renderer,
-        SDL_PIXELFORMAT_BGR24,    // SDL_PIXELFORMAT_YV12,
-        SDL_TEXTUREACCESS_TARGET, // SDL_TEXTUREACCESS_STREAMING,
-        videoRectSrc.w, videoRectSrc.h);
+    video_texture = SDL_CreateTexture(window->renderer,
+                                      SDL_PIXELFORMAT_BGR24,    // SDL_PIXELFORMAT_YV12,
+                                      SDL_TEXTUREACCESS_TARGET, // SDL_TEXTUREACCESS_STREAMING,
+                                      videoRectSrc.w, videoRectSrc.h);
     if (!video_texture) {
         std::cout << SDL_GetError() << std::endl;
     }

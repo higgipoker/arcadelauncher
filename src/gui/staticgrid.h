@@ -1,13 +1,13 @@
 #pragma once
 
-#include "sdl/window.h"
+#include "../sdl/window.h"
 #include "selectiontheme.h"
-#include "utils/gridtools.h"
-#include "widgets/animations/blink.h"
-#include "widgets/animations/expand.h"
-#include "widgets/icon.h"
-#include "widgets/video.h"
-#include "widgets/widget.h"
+#include "../utils/gridtools.h"
+#include "../widgets/animations/blink.h"
+#include "../widgets/animations/expand.h"
+#include "../widgets/icon.h"
+#include "../widgets/video.h"
+#include "../widgets/widget.h"
 #include <vector>
 
 class StaticGrid : public SelectionTheme {

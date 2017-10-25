@@ -1,11 +1,12 @@
-#include "sdl/text.h"
-#include "utils/timer.h"
+#include <memory>
+#include "../sdl/text.h"
+#include "../utils/timer.h"
 #include "widget.h"
 
 class TextBar : public Widget {
   public:
     TextBar(SDLWindow *window, const std::string &text, int w, int h);
-    virtual ~TextBar();
+
     void render();
 
     /**
@@ -18,7 +19,7 @@ class TextBar : public Widget {
     /**
      * @brief get get position
      */
-    virtual Point getPosition() { return Point(); };
+    virtual Point getPosition() { return Point(); }
 
     virtual void show();
 
@@ -33,8 +34,8 @@ class TextBar : public Widget {
     virtual int getHeight();
 
   protected:
-    SDL_Text *text;
+    std::unique_ptr<SDL_Text> text;
     int width;
     int height;
-    SDLWindow *wnd;
+    SDLWindow &wnd;
 };

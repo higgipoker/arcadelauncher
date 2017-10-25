@@ -1,9 +1,9 @@
-#include "gui/coverflow.h"
-#include "gui/staticgrid.h"
-#include "utils/timer.h"
-#include "widgets/background.h"
-#include "widgets/icon.h"
-#include "input/input.h"
+#include "../gui/coverflow.h"
+#include "../gui/staticgrid.h"
+#include "../utils/timer.h"
+#include "../widgets/background.h"
+#include "../widgets/icon.h"
+#include "../input/input.h"
 
 class MainMenu {
   public:

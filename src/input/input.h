@@ -10,7 +10,7 @@
 #define __sensi2__Input__
 
 #include "SDL.h"
-#include "utils/timer.h"
+#include "../utils/timer.h"
 #include <iostream>
 
 enum input_event {

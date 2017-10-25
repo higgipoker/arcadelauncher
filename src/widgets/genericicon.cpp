@@ -1,19 +1,20 @@
 #include "genericicon.h"
+#include "../sdl/sdl.h"
 
 // --------------------------------------------------
 // GenericIcon
 // --------------------------------------------------
-GenericIcon::GenericIcon(SDLWindow *window, const std::string &name,
-                         SDL_Text *t, const std::string &filename,
+GenericIcon::GenericIcon(SDLWindow *window, const std::string &name, const std::string &filename,
                          const std::string &border_filename,
                          const std::string &border_highlight_filename)
     : Icon(window, filename, border_filename, border_highlight_filename) {
-    text = t;
-    t->setText(name);
+    text = SDL::createText("fonts/atari full.ttf", 12, SDL::window());
+    text->setText(name);
 }
 
-GenericIcon::~GenericIcon() {}
+GenericIcon::~GenericIcon(){
 
+}
 // --------------------------------------------------
 // render
 // --------------------------------------------------

@@ -1,5 +1,5 @@
 #include "icon.h"
-#include "sdl/text.h"
+#include "../sdl/text.h"
 
 /** @brief  a generic icon to use  when game icon not found (special featuer to
  * add game name text) */
@@ -14,12 +14,12 @@ class GenericIcon : public Icon {
      * @param border_filename filename of border image
      * @param border_highlight_filename filename of the highlight image
      */
-    GenericIcon(SDLWindow *window, const std::string &name, SDL_Text *t,
+    GenericIcon(SDLWindow *window, const std::string &name,
                 const std::string &filename,
                 const std::string &border_filename = "",
                 const std::string &border_highlight_filename = "");
 
-    virtual ~GenericIcon();
+    ~GenericIcon();
 
     /**
      * @brief render

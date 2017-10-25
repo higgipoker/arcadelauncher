@@ -1,6 +1,9 @@
 #pragma once
 
-#include "sdl/image.h"
+#include <memory>
+#include <iostream>
+
+#include "../sdl/image.h"
 #include "widget.h"
 
 /** @brief Icon widget */
@@ -13,8 +16,7 @@ class Icon : public Widget {
      * @param border_filename image border
      * @param border_highlight_filename highlight filename
      */
-    Icon(SDLWindow *window, const std::string &filename,
-         const std::string &border_filename = "",
+    Icon(SDLWindow *window, const std::string &filename, const std::string &border_filename = "",
          const std::string &border_highlight_filename = "");
 
     /**
@@ -56,7 +58,9 @@ class Icon : public Widget {
     /**
      * @brief get get position
      */
-    virtual Point getPosition() { return image->getPosition(); };
+    virtual Point getPosition() {
+        return image->getPosition();
+    }
 
     /**
      * @brief get width
@@ -73,13 +77,13 @@ class Icon : public Widget {
 
   protected:
     /// border image
-    Image *border;
+    std::unique_ptr<Image> border;
 
     /// highlight border image
-    Image *border_lit;
+    std::unique_ptr<Image> border_lit;
 
-    /// icon image
-    Image *image;
+    /// icon image    
+    std::unique_ptr<Image> image;
 
     /// position
     int x, y;

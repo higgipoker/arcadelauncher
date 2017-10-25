@@ -1,10 +1,10 @@
-#include "SDL.h"
+#include <SDL.h>
 #include <SDL_mixer.h>
 #include <SDL_ttf.h>
 #include <iostream>
 
-#include "config/config.h"
-#include "utils/stringtools.h"
+#include "../config/config.h"
+#include "../utils/stringtools.h"
 
 #include "sdl.h"
 
@@ -12,18 +12,19 @@ SDLWindow *SDL::wnd = NULL;
 Keyboard *SDL::keyboard = NULL;
 Joystick *SDL::joystick = NULL;
 Input *SDL::input_device = NULL;
+std::vector<SDL_Text*> SDL::text_pointers;
 
 bool SDL::SOUND_INITED = false;
 
 void SDL::initGraphics() {
     SOUND_INITED = false;
 
-    if(SDL_Init(SDL_INIT_EVERYTHING) == -1) {
+    if (SDL_Init(SDL_INIT_EVERYTHING) == -1) {
 
         std::cout << (SDL_GetError()) << std::endl;
     }
 
-    if(TTF_Init() == -1) {
+    if (TTF_Init() == -1) {
 
         std::cout << (SDL_GetError()) << std::endl;
     }
@@ -34,19 +35,18 @@ void SDL::initGraphics() {
     SDL_Init(SDL_INIT_VIDEO);
 
     // Get current display mode of all displays.
-    for(int i = 0; i < SDL_GetNumVideoDisplays(); ++i) {
+    for (int i = 0; i < SDL_GetNumVideoDisplays(); ++i) {
 
         int should_be_zero = SDL_GetCurrentDisplayMode(i, &current);
 
-        if(should_be_zero != 0)
+        if (should_be_zero != 0)
             // In case of error...
-            SDL_Log("Could not get display mode for video display #%d: %s", i,
-                    SDL_GetError());
+            SDL_Log("Could not get display mode for video display #%d: %s", i, SDL_GetError());
 
         else
             // On success, print the current display mode.
-            SDL_Log("Display #%d: current display mode is %dx%dpx @ %dhz. \n",
-                    i, current.w, current.h, current.refresh_rate);
+            SDL_Log("Display #%d: current display mode is %dx%dpx @ %dhz. \n", i, current.w, current.h,
+                    current.refresh_rate);
     }
 
     // screen dimensions
@@ -57,7 +57,7 @@ void SDL::initGraphics() {
 
     unsigned int WINDOW_FLAGS = 0;
 
-    if(Config::data.screen_mode == "fullscreen") {
+    if (Config::data.screen_mode == "fullscreen") {
         std::cout << "Fullscreen" << std::endl;
         WINDOW_FLAGS = SDL_WINDOW_FULLSCREEN;
         WINDOW_WIDTH = current.w;
@@ -80,19 +80,20 @@ void SDL::initGraphics() {
     SDL_ShowCursor(false);
 #endif
 
-    SDL_Log("%s%d", "Window display index: ",
-            SDL_GetWindowDisplayIndex(wnd->win));
+    SDL_Log("%s%d", "initGraphics: Window display index: ", SDL_GetWindowDisplayIndex(wnd->win));
 }
 
 void SDL::initSound() {
-    if(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 1024) < 0) {
-        std::cout << "SDL_mixer could not initialize! SDL_mixer Error: "
-                  << Mix_GetError() << std::endl;
+    SDL_Log("%s", "initSound...");
+    if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 1024) < 0) {
+        std::cout << "SDL_mixer could not initialize! SDL_mixer Error: " << Mix_GetError() << std::endl;
         return;
     }
 
+    SDL_Log("%s", "initSound: done");
+
     SOUND_INITED = true;
-    Mix_Volume(-1, 80);
+    Mix_Volume(-1, 80);   
 }
 
 void SDL::initInput() {
@@ -103,7 +104,7 @@ void SDL::initInput() {
     keyboard = new Keyboard();
 
     // initialize a joystick
-    if(SDL_NumJoysticks() > 0) {
+    if (SDL_NumJoysticks() > 0) {
         joystick->init();
 
     } else {
@@ -112,19 +113,24 @@ void SDL::initInput() {
         joystick = NULL;
     }
 
-    if(joystick) {
+    if (joystick) {
         input_device = joystick;
 
     } else {
         input_device = keyboard;
     }
+
+    SDL_Log("%s", "initInput: done");
 }
 
 void SDL::close() {
+    for(auto it=text_pointers.begin(); it!=text_pointers.end(); ++it){
+        delete *it;
+    }
     SDL_ShowCursor(true);
     wnd->close();
 
-    if(SDL::SOUND_INITED)
+    if (SDL::SOUND_INITED)
         Mix_HaltMusic();
 
     TTF_Quit();
@@ -143,13 +149,14 @@ void SDL::present() {
     wnd->present();
 }
 
-SDL_Text *SDL::createText(const std::string &font_name, int font_height,
-                          bool shadow) {
+SDL_Text *SDL::createText(const std::string &font_name, int font_height, bool shadow) {
     // game text object using the font
     SDL_Text *text = new SDL_Text(wnd, font_name, font_height);
 
     // init shadow
     text->shadow = shadow;
+
+    text_pointers.push_back(text);
 
     return text;
 }

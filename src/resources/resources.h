@@ -3,11 +3,11 @@
 #include <string>
 #include <vector>
 
-#include "sdl/text.h"
-#include "widgets/background.h"
-#include "widgets/icon.h"
-#include "widgets/screeneffect.h"
-#include "widgets/video.h"
+#include "../sdl/text.h"
+#include "../widgets/background.h"
+#include "../widgets/icon.h"
+#include "../widgets/screeneffect.h"
+#include "../widgets/video.h"
 
 /**
  * @brief supported platforms

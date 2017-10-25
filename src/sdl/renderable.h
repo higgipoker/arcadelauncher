@@ -11,10 +11,10 @@
 #include <iostream>
 #include <vector>
 
-#include "SDL.h"
+#include <SDL.h>
 #include <SDL_image.h>
 
-#include "utils/point.h"
+#include "../utils/point.h"
 #include "window.h"
 
 //  -------------------------------------------------------

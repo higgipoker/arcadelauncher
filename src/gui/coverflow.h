@@ -1,13 +1,13 @@
 #pragma once
-#include "sdl/window.h"
+#include "../sdl/window.h"
 #include "selectiontheme.h"
-#include "widgets/animations/animation.h"
-#include "widgets/animations/blink.h"
-#include "widgets/animations/expand.h"
-#include "widgets/animations/scale.h"
-#include "widgets/animations/slide.h"
-#include "widgets/video.h"
-#include "widgets/widget.h"
+#include "../widgets/animations/animation.h"
+#include "../widgets/animations/blink.h"
+#include "../widgets/animations/expand.h"
+#include "../widgets/animations/scale.h"
+#include "../widgets/animations/slide.h"
+#include "../widgets/video.h"
+#include "../widgets/widget.h"
 #include <vector>
 
 class Coverflow : public SelectionTheme {

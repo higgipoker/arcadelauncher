@@ -1,29 +1,24 @@
 #include "screeneffect.h"
-#include "config/config.h"
-#include "utils/stringtools.h"
+#include "../config/config.h"
+#include "../utils/stringtools.h"
 
-ScreenEffect::ScreenEffect(SDLWindow *wnd, const std::string &filename,
-                           int width, int height) {
+ScreenEffect::ScreenEffect(SDLWindow *wnd, const std::string &filename, int width, int height) {
     flicker = false;
     intensity = flicker_intensity = 0;
 
     intensity = StringTools::toInt(Config::data.screen_effect_intensity);
-    flicker_intensity =
-        StringTools::toInt(Config::data.screen_effect_intensity_flicker);
+    flicker_intensity = StringTools::toInt(Config::data.screen_effect_intensity_flicker);
 
     intensity *= 2.55;
     flicker_intensity *= 2.55;
 
     window = wnd;
 
-    overlay = SDL_CreateTexture(
-        window->renderer,
-        SDL_PIXELFORMAT_BGR24, // SDL_PIXELFORMAT_YV12,
-        SDL_TEXTUREACCESS_STATIC /*SDL_TEXTUREACCESS_STREAMING*/ |
-            SDL_TEXTUREACCESS_TARGET,
-        width, height);
+    overlay = SDL_CreateTexture(window->renderer,
+                                SDL_PIXELFORMAT_BGR24, // SDL_PIXELFORMAT_YV12,
+                                SDL_TEXTUREACCESS_STATIC /*SDL_TEXTUREACCESS_STREAMING*/ | SDL_TEXTUREACCESS_TARGET,
+                                width, height);
     if (!overlay) {
-
         std::cout << SDL_GetError() << std::endl;
     }
 
@@ -73,7 +68,9 @@ ScreenEffect::ScreenEffect(SDLWindow *wnd, const std::string &filename,
 
     delete image;
 }
-ScreenEffect::~ScreenEffect() { SDL_DestroyTexture(overlay); }
+ScreenEffect::~ScreenEffect() {
+    SDL_DestroyTexture(overlay);
+}
 
 // --------------------------------------------------
 // render
@@ -93,29 +90,38 @@ void ScreenEffect::render() {
 // --------------------------------------------------
 // render
 // --------------------------------------------------
-bool ScreenEffect::render(const SDL_Rect &target_rect) { return false; }
+bool ScreenEffect::render(const SDL_Rect &target_rect) {
+    return false;
+}
 
 // --------------------------------------------------
 // setPosition
 // --------------------------------------------------
-void ScreenEffect::setPosition(int _x, int _y) {}
+void ScreenEffect::setPosition(int _x, int _y) {
+}
 
 // --------------------------------------------------
 // blend
 // --------------------------------------------------
-void ScreenEffect::blend(int alpha) {}
+void ScreenEffect::blend(int alpha) {
+}
 
 // --------------------------------------------------
 // move
 // --------------------------------------------------
-void ScreenEffect::move(int _x, int _y) {}
+void ScreenEffect::move(int _x, int _y) {
+}
 
 // --------------------------------------------------
 // getWidth
 // --------------------------------------------------
-int ScreenEffect::getWidth() { return 0; }
+int ScreenEffect::getWidth() {
+    return 0;
+}
 
 // --------------------------------------------------
 // getHeight
 // --------------------------------------------------
-int ScreenEffect::getHeight() { return 0; }
+int ScreenEffect::getHeight() {
+    return 0;
+}

@@ -1,7 +1,7 @@
 #pragma once
 
-#include "utils/point.h"
-#include "utils/timer.h"
+#include "../utils/point.h"
+#include "../utils/timer.h"
 
 /** @brief BaseWidget */
 class Widget {
@@ -14,14 +14,14 @@ class Widget {
     virtual int getHeight() = 0;
     virtual void update();
 
-    virtual void move(int _x, int _y){};
+    virtual void move(int _x, int _y){}
     virtual void highlight(bool state);
     virtual void toggleHighlight();
     virtual void scale(float _w, float _h);
     virtual void scale(int _w, int _h);
     virtual void blend(int _alpha);
 
-    virtual bool render(const SDL_Rect &target_rect) { return false; };
+    virtual bool render(const SDL_Rect &target_rect) { return false; }
 
     void show();
     void hide();
