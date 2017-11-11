@@ -89,7 +89,7 @@ void Resources::load_mame_games(void) {
                     new_game->exec_command =
                      mame_executable + " " + rawname + " -inipath " + mame_ini + " -rompath " + mame_games_folder;
                     new_game->icon = make_icon(mame_icons_folder, rawname);
-                    new_game->video_name = mame_vids_folder + "/" + rawname + ".avi";
+                    new_game->video_name = mame_vids_folder + "/" + rawname + ".mp4";
 
                     // stick in list
                     game_list.push_back(new_game);

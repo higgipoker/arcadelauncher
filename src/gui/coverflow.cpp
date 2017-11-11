@@ -540,6 +540,7 @@ void Coverflow::launchGame() {
         Mix_FadeOutChannel(2, 1000);
     }
 
+    std::cout << "Executing: " << games[getSelectionIndex()]->exec_command.c_str() << std::endl;
     int err = system(games[getSelectionIndex()]->exec_command.c_str());
 
     if(err) {

@@ -74,55 +74,55 @@ void Joystick::onUpdate(SDL_Event event) {
         tap = 0;
     }
 
-    if(event.type == SDL_JOYAXISMOTION) {
+//    if(event.type == SDL_JOYAXISMOTION) {
 
-        // check left-right movement
-        if(event.jaxis.axis == 0) {
-            // if joystick moving left
-            if(event.jaxis.value < -3200) {
-                // move left
-                event_states[LEFT] = 1;
-            }
+//        // check left-right movement
+//        if(event.jaxis.axis == 0) {
+//            // if joystick moving left
+//            if(event.jaxis.value < -3200) {
+//                // move left
+//                event_states[LEFT] = 1;
+//            }
 
-            else {
-                event_states[LEFT] = 0;
-            }
+//            else {
+//                event_states[LEFT] = 0;
+//            }
 
-            // if joystick moving right
-            if(event.jaxis.value > 3200) {
-                // move right
-                event_states[RIGHT] = 1;
-            }
+//            // if joystick moving right
+//            if(event.jaxis.value > 3200) {
+//                // move right
+//                event_states[RIGHT] = 1;
+//            }
 
-            else {
+//            else {
 
-                event_states[RIGHT] = 0;
-            }
-        }
+//                event_states[RIGHT] = 0;
+//            }
+//        }
 
-        // check up-down movement
-        if(event.jaxis.axis == 1) {
-            // if joystick moving up
-            if(event.jaxis.value < -3200) {
-                // move up
-                event_states[UP] = 1;
-            }
+//        // check up-down movement
+//        if(event.jaxis.axis == 1) {
+//            // if joystick moving up
+//            if(event.jaxis.value < -3200) {
+//                // move up
+//                event_states[UP] = 1;
+//            }
 
-            else {
-                event_states[UP] = 0;
-            }
+//            else {
+//                event_states[UP] = 0;
+//            }
 
-            // if joystick moving down
-            if(event.jaxis.value > 3200) {
-                // move down
-                event_states[DOWN] = 1;
-            }
+//            // if joystick moving down
+//            if(event.jaxis.value > 3200) {
+//                // move down
+//                event_states[DOWN] = 1;
+//            }
 
-            else {
-                event_states[DOWN] = 0;
-            }
-        }
-    }
+//            else {
+//                event_states[DOWN] = 0;
+//            }
+//        }
+//    }
 
     if(event.type == SDL_JOYHATMOTION) {
         if(event.jhat.value & SDL_HAT_UP) {
