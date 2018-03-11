@@ -2,9 +2,9 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-#include "libswscale/swscale.h"
 #include <libavcodec/avcodec.h>
 #include <libavformat/avformat.h>
+#include <libswscale/swscale.h>
 #ifdef __cplusplus
 }
 #endif
@@ -26,15 +26,15 @@ extern "C" {
 #include "gui/main_menu.h"
 
 /* the main menu */
-MainMenu main_menu;
+static MainMenu main_menu;
 
 /* quit program? */
-bool quit = false;
+static bool quit = false;
 
 /* game for single game mode */
-GAME *single_game;
+static GAME *single_game;
 
-TextBar *ip_bar;
+static TextBar *ip_bar;
 
 // --------------------------------------------------
 // handleInput
@@ -72,12 +72,12 @@ void handleInput() {
 
             switch (event.key.keysym.sym) {
 
-            case SDLK_TAB:
-                ip_bar->show();
-                break;
+                case SDLK_TAB:
+                    ip_bar->show();
+                    break;
 
-            default:
-                break;
+                default:
+                    break;
             }
         }
     }
@@ -194,7 +194,8 @@ int main(int argc, char *argv[]) {
     std::string ip = IPAddress::Get();
     std::cout << ip << std::endl;
 
-    ip_bar = new TextBar(SDL::window(), ip, StringTools::toInt(Config::data.screen_width), 42);
+    ip_bar =
+        new TextBar(SDL::window(), ip, StringTools::toInt(Config::data.screen_width), 42);
 
     // main program loop
     while (!quit) {

@@ -16,7 +16,9 @@ add_definitions(-std=c++14)
 
 # set include dirs
 include_directories("${PROJECT_SOURCE_DIR}/src")
+include_directories("/usr/local/include/SDL2")
 include_directories("/usr/include/SDL2")
+include_directories("/usr/include/SDL")
 
 #add files
 add_executable(arcadelauncher
